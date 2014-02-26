@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_bdcentrosprofesores" default="compile.module.bdcentrosprofesores">
+  <dirname property="module.bdcentrosprofesores.basedir" file="${ant.file.module_bdcentrosprofesores}"/>
+  
+  <property name="module.jdk.home.bdcentrosprofesores" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.bdcentrosprofesores" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.bdcentrosprofesores" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.bdcentrosprofesores" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="bdcentrosprofesores.output.dir" value="${module.bdcentrosprofesores.basedir}/out/production/BdCentrosProfesores"/>
+  <property name="bdcentrosprofesores.testoutput.dir" value="${module.bdcentrosprofesores.basedir}/out/test/BdCentrosProfesores"/>
+  
+  <path id="bdcentrosprofesores.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="bdcentrosprofesores.module.production.classpath">
+    <path refid="${module.jdk.classpath.bdcentrosprofesores}"/>
+  </path>
+  
+  <path id="bdcentrosprofesores.runtime.production.module.classpath">
+    <pathelement location="${bdcentrosprofesores.output.dir}"/>
+  </path>
+  
+  <path id="bdcentrosprofesores.module.classpath">
+    <path refid="${module.jdk.classpath.bdcentrosprofesores}"/>
+    <pathelement location="${bdcentrosprofesores.output.dir}"/>
+  </path>
+  
+  <path id="bdcentrosprofesores.runtime.module.classpath">
+    <pathelement location="${bdcentrosprofesores.testoutput.dir}"/>
+    <pathelement location="${bdcentrosprofesores.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.bdcentrosprofesores">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.bdcentrosprofesores">
+    <patternset refid="excluded.from.module.bdcentrosprofesores"/>
+  </patternset>
+  
+  <path id="bdcentrosprofesores.module.sourcepath">
+    <dirset dir="${module.bdcentrosprofesores.basedir}">
+      <include name="src"/>
+      <include name="gen"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.bdcentrosprofesores" depends="compile.module.bdcentrosprofesores.production,compile.module.bdcentrosprofesores.tests" description="Compile module BdCentrosProfesores"/>
+  
+  <target name="compile.module.bdcentrosprofesores.production" depends="register.custom.compilers" description="Compile module BdCentrosProfesores; production classes">
+    <mkdir dir="${bdcentrosprofesores.output.dir}"/>
+    <javac2 destdir="${bdcentrosprofesores.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.bdcentrosprofesores}/javac">
+      <compilerarg line="${compiler.args.bdcentrosprofesores}"/>
+      <bootclasspath refid="bdcentrosprofesores.module.bootclasspath"/>
+      <classpath refid="bdcentrosprofesores.module.production.classpath"/>
+      <src refid="bdcentrosprofesores.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.bdcentrosprofesores"/>
+    </javac2>
+    
+    <copy todir="${bdcentrosprofesores.output.dir}">
+      <fileset dir="${module.bdcentrosprofesores.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.bdcentrosprofesores.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.bdcentrosprofesores.tests" depends="register.custom.compilers,compile.module.bdcentrosprofesores.production" description="compile module BdCentrosProfesores; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.bdcentrosprofesores" description="cleanup module">
+    <delete dir="${bdcentrosprofesores.output.dir}"/>
+    <delete dir="${bdcentrosprofesores.testoutput.dir}"/>
+  </target>
+</project>

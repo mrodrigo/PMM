@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_examenandroidfuncio" default="compile.module.examenandroidfuncio">
+  <dirname property="module.examenandroidfuncio.basedir" file="${ant.file.module_examenandroidfuncio}"/>
+  
+  <property name="module.jdk.home.examenandroidfuncio" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.examenandroidfuncio" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.examenandroidfuncio" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.examenandroidfuncio" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="examenandroidfuncio.output.dir" value="${module.examenandroidfuncio.basedir}/out/production/ExamenAndroidfuncio"/>
+  <property name="examenandroidfuncio.testoutput.dir" value="${module.examenandroidfuncio.basedir}/out/test/ExamenAndroidfuncio"/>
+  
+  <path id="examenandroidfuncio.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="examenandroidfuncio.module.production.classpath">
+    <path refid="${module.jdk.classpath.examenandroidfuncio}"/>
+  </path>
+  
+  <path id="examenandroidfuncio.runtime.production.module.classpath">
+    <pathelement location="${examenandroidfuncio.output.dir}"/>
+  </path>
+  
+  <path id="examenandroidfuncio.module.classpath">
+    <path refid="${module.jdk.classpath.examenandroidfuncio}"/>
+    <pathelement location="${examenandroidfuncio.output.dir}"/>
+  </path>
+  
+  <path id="examenandroidfuncio.runtime.module.classpath">
+    <pathelement location="${examenandroidfuncio.testoutput.dir}"/>
+    <pathelement location="${examenandroidfuncio.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.examenandroidfuncio">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.examenandroidfuncio">
+    <patternset refid="excluded.from.module.examenandroidfuncio"/>
+  </patternset>
+  
+  <path id="examenandroidfuncio.module.sourcepath">
+    <dirset dir="${module.examenandroidfuncio.basedir}">
+      <include name="src"/>
+      <include name="gen"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.examenandroidfuncio" depends="compile.module.examenandroidfuncio.production,compile.module.examenandroidfuncio.tests" description="Compile module ExamenAndroidfuncio"/>
+  
+  <target name="compile.module.examenandroidfuncio.production" depends="register.custom.compilers" description="Compile module ExamenAndroidfuncio; production classes">
+    <mkdir dir="${examenandroidfuncio.output.dir}"/>
+    <javac2 destdir="${examenandroidfuncio.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.examenandroidfuncio}/javac">
+      <compilerarg line="${compiler.args.examenandroidfuncio}"/>
+      <bootclasspath refid="examenandroidfuncio.module.bootclasspath"/>
+      <classpath refid="examenandroidfuncio.module.production.classpath"/>
+      <src refid="examenandroidfuncio.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.examenandroidfuncio"/>
+    </javac2>
+    
+    <copy todir="${examenandroidfuncio.output.dir}">
+      <fileset dir="${module.examenandroidfuncio.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.examenandroidfuncio.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.examenandroidfuncio.tests" depends="register.custom.compilers,compile.module.examenandroidfuncio.production" description="compile module ExamenAndroidfuncio; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.examenandroidfuncio" description="cleanup module">
+    <delete dir="${examenandroidfuncio.output.dir}"/>
+    <delete dir="${examenandroidfuncio.testoutput.dir}"/>
+  </target>
+</project>
